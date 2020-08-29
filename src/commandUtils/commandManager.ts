@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Context from './Context';
 
 export const commandDefaults: CommandInfo = {
@@ -12,11 +11,9 @@ export const commandDefaults: CommandInfo = {
 
 export const commandConstructor = (partial: Partial<CommandInfo>) => {
   const command = {...commandDefaults, ...partial};
-  command.aliases.push(command.name);
+  command.aliases = [...(partial.aliases || []), command.name];
   const call = async (ctx: Context) => {
-    console.log(command.name);
-    const updatedCtx = {...ctx};
-    updatedCtx.managers = [call, ...updatedCtx.managers];
+    const updatedCtx = new Context(ctx, call);
     if(await command.hasPermission(updatedCtx)) await command.execute(updatedCtx);
   }
   call.info = command;
