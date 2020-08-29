@@ -8,4 +8,5 @@ export const prefix = process.env.PREFIX ?? 'bs';
 
 export const devs = [
   '163435237924143104',
+  '164041686211756032',
 ];

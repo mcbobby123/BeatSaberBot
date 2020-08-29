@@ -14,7 +14,13 @@ export const commandConstructor = (partial: Partial<CommandInfo>) => {
   command.aliases = [...(partial.aliases || []), command.name];
   const call = async (ctx: Context) => {
     const updatedCtx = new Context(ctx, call);
-    if(await command.hasPermission(updatedCtx)) await command.execute(updatedCtx);
+    if(await command.hasPermission(updatedCtx)) {
+      try{
+        await command.execute(updatedCtx);
+      } catch (e) {
+        updatedCtx.error(e.result.error.message);
+      }
+    }
   }
   call.info = command;
   return call as Command;
