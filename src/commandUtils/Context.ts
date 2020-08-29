@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Command } from './commandManager';
 import root from '../rootCommand';
 
@@ -19,5 +19,14 @@ export default class Context{
       this.args = arg1.content.split(/\s+/);
       this.managers = [root];
     }
+  }
+
+  error(explaination: string){
+    this.msg.reply(
+      new MessageEmbed()
+        .setTitle('An Error Occured')
+        .setDescription(explaination)
+        .setThumbnail('https://statsify.net/img/assets/error.gif')
+    )
   }
 }
