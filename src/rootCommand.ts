@@ -1,7 +1,6 @@
 import { commandConstructor } from './commandUtils/commandManager';
-import { prefix } from './env';
+import { prefix, devs } from './env';
 import childExec from './commandUtils/childExec';
-
 import ping from './commands/ping';
 import top from './commands/top';
 
@@ -12,6 +11,9 @@ const BotCommands = commandConstructor({
     ping,
     top,
   ],
+  hasPermission: (ctx)=>{
+    return devs.includes(ctx.msg.author.id)
+  }
 });
 
 export default commandConstructor({
