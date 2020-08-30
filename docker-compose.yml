@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:4
+  main:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo

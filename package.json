@@ -18,8 +18,10 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
+    "@types/mongoose": "^5.7.36",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
+    "mongoose": "^5.10.2",
     "typed-rest-client": "^1.7.3"
   }
 }

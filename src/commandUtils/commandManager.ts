@@ -1,4 +1,5 @@
 import Context from './Context';
+import Argument from './Argument';
 
 export const commandDefaults: CommandInfo = {
   name: 'commandname',
@@ -7,6 +8,7 @@ export const commandDefaults: CommandInfo = {
   hasPermission: () => true,
   unknownCommand: () => {},
   children: [],
+  arguments: [],
 }
 
 export const commandConstructor = (partial: Partial<CommandInfo>) => {
@@ -39,6 +41,6 @@ export type CommandInfo = {
   execute: (ctx: Context) => MaybeAsyc<unknown>,
   unknownCommand: (ctx: Context, arg: string | undefined) => MaybeAsyc<unknown>,
   children: Command[],
+  arguments: Argument[],
 };
-
 
