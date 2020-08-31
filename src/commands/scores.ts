@@ -12,6 +12,7 @@ export default commandConstructor({
     execute: async ctx => {
       try{
         const { scores } = await api.getScores(ctx.args[0], order, 0);
+        console.log(ctx.userDoc);
         ctx.msg.reply(
           new MessageEmbed()
             .setTitle('Top Plays')
@@ -21,7 +22,7 @@ export default commandConstructor({
                 value: `${s.pp}pp (${s.maxScore ? Math.round(10000*s.score/s.maxScore)/100+'%' : s.score.toLocaleString()+' score'})`
               }))
             )
-            .setThumbnail(api.getAvatarURL(ctx.args[0]))
+            .setThumbnail(ctx.userDoc?.avatar || api.getAvatarURL(ctx.args[0]))
         )
       }catch(e){
         ctx.error(e.result.error.message);

@@ -1,12 +1,14 @@
 import { Message, MessageEmbed } from "discord.js";
 import { Command } from './commandManager';
-import { IUser } from "../Models/User";
+import { Player, getPlayer } from '../apiTools/scoresaber';
+import User, { IUser } from '../Models/User';
 
 export default class Context{
   msg: Message;
   args: string[];
   managers: Command[];
-  target?: IUser;
+  scoresaberPlayers: {[key in string]?: Player} = {};
+  userDoc?: IUser;
 
   constructor(arg1: Message);
   constructor(arg1: Context, arg2: Command);
@@ -20,6 +22,20 @@ export default class Context{
       this.args = arg1.content.split(/\s+/);
       this.managers = [];
     }
+  }
+
+  async getPlayer(id: string){
+    if(this.scoresaberPlayers[id]) return this.scoresaberPlayers[id] as Player;
+    const player = await getPlayer(id);
+    this.scoresaberPlayers[id] = player;
+    return player;
+  }
+
+  async getUser(id: string){
+    if(this.userDoc?.id === id) return this.userDoc;
+    const doc = await User.findById(id);
+    this.userDoc = doc ?? undefined;
+    return doc;
   }
   
   async validate(){

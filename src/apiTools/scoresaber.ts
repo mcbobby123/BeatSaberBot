@@ -1,7 +1,8 @@
 import { RestClient } from "typed-rest-client/RestClient";
 
-const host = 'https://new.scoresaber.com/api/';
-const restClient = new RestClient(null, host);
+export const host = 'https://new.scoresaber.com';
+export const apiHost = `${host}/api/`;
+const restClient = new RestClient(null, apiHost);
 
 export const getPlayer = async (id: string) => {
   const response = await restClient.get<Player>(`player/${id}/full`);
@@ -70,17 +71,18 @@ export interface Badge {
 
 export interface PlayerInfo {
   playerId: string,
+  playerName: string,
+  avatar: string,
+  rank: number,
+  countryRank: number
   pp: number,
-  banned: boolean,
-  inactive: boolean,
-  name: string,
   country: string,
   role: string,
   badges: Badge[],
   history: string,
-  avatar: string,
-  rank: number,
-  countryRank: number
+  banned: number,
+  inactive: number,
+  permissions: number,
 }
 
 export interface ScoreStats {
