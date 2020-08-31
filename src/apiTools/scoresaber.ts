@@ -54,6 +54,8 @@ export const getPlayerPages = async () => {
   return response.result;
 }
 
+export const getAvatarURL = (id: string) => `${host}static/avatars/${id}.jpg`;
+
 export const ScoreOrder = {
   TOP: "top",
   RECENT: "recent",
@@ -125,10 +127,24 @@ export interface Score {
   songSubName: string,
   songAuthorName: string,
   levelAuthorName: string,
-  diff: string,
+  difficulty: number,
+  difficultyRaw: string,
   maxScore: number,
   rank: number
 }
+
+export const difficulties = [
+  '?',
+  'Easy',
+  '?',
+  'Normal',
+  '?',
+  'Hard',
+  '?',
+  'Expert',
+  '?',
+  'Expert+'
+]
 
 export interface ScoreReply {
   scores: Score[]

@@ -1,5 +1,6 @@
 import Context from './Context';
 import Argument from './Argument';
+import { MaybeAsyc } from '../utilityTypes';
 
 export const commandDefaults: CommandInfo = {
   name: 'commandname',
@@ -18,9 +19,9 @@ export const commandConstructor = (partial: Partial<CommandInfo>) => {
     const updatedCtx = new Context(ctx, call);
     if(await command.hasPermission(updatedCtx)) {
       try{
-        await command.execute(updatedCtx);
+        if(await updatedCtx.validate()) await command.execute(updatedCtx);
       } catch (e) {
-        updatedCtx.error(e.result.error.message);
+        updatedCtx.error(e.toString());
       }
     }
   }
@@ -28,11 +29,13 @@ export const commandConstructor = (partial: Partial<CommandInfo>) => {
   return call as Command;
 }
 
-type MaybeAsyc<T> = T | Promise<T>
+
 
 export type CommandFn = (ctx: Context) => MaybeAsyc<unknown>;
 
-export type Command = CommandFn & { info: CommandInfo };
+export type Command = CommandFn & {
+  info: CommandInfo
+};
 
 export type CommandInfo = {
   name: string,

@@ -2,6 +2,13 @@ import Discord from 'discord.js';
 import { token } from './env';
 import root from './rootCommand';
 import Context from './commandUtils/Context';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://mongo/beatsaberbot', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true,
+});
 
 const client = new Discord.Client();
 
